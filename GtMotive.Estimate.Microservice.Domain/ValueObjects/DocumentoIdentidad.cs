@@ -81,21 +81,79 @@ namespace GtMotive.Estimate.Microservice.Domain.ValueObjects
                     }
                     break;
                 case TipoDocumento.NIE:
-                    // Reglas NIE
+                    if (!EsValidoNie(valor))
+                    {
+                        throw new DomainException($"El NIE '{valor}' no es válido.");
+                    }
                     break;
+
                 case TipoDocumento.Pasaporte:
-                    // Reglas pasaporte
+                    if (!EsValidoNie(valor))
+                    {
+                        throw new DomainException($"El NIE '{valor}' no es válido.");
+                    }
                     break;
+
+
                 default:
-                    throw new DomainException($"Tipo de documento '{tipo}' no gestionado.");
+                    throw new DomainException($"Tipo de documento '{tipo}' no es valido.");
             }
         }
 
-        // Estos métodos "EsDni", "EsNie", etc. podrían estar en otra clase helper para no ensuciar el VO
-        private static bool EsDni(string valor) => /* Lógica de detección... */ false;
-        private static bool EsNie(string valor) => /* Lógica de detección... */ false;
-        private static bool EsPasaporte(string valor) => /* Lógica... */ false;
-        private static bool EsValidoDni(string valor) => /* Lógica... */ false;
+        // Aca para evitar complejidad en el ejemplo, se hace una validacion
+        // muy sencilla del tipo de documento, ya que desconozco como son los formatos
+        // de los firefentes tipos de documentos
+        // Por otra parte, y a mono de evitar mayores complejidades
+        // estos métodos "EsDni", "EsNie", etc. deberian estar en otra clase
+        // tipo helper para evitar romper con los princiios SOLID, y el el valueObject
+        // solamente tenga la responsabiidad de lo que le compete su sola existencia
+        private static bool EsDni(string valor)
+        {
+            if (valor.StartsWith("DNI", StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+            return false;
+        }
+        private static bool EsNie(string valor)
+        {
+            if (valor.StartsWith("NIE", StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+            return false;
+
+        }
+        private static bool EsPasaporte(string valor)
+        {
+            if (valor.StartsWith("PAS", StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+            return false;
+
+        }
+        private static bool EsValidoDni(string valor)
+        {
+            // Logica mas compleja de validacion de formato de DNI
+            if (valor.Length > 3)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private static bool EsValidoNie(string valor)
+        {
+            // Logica mas compleja de validacion de formato de DNI
+            if (valor.Length > 3)
+            {
+                return true;
+            }
+
+            return false;
+        }
 
         /// <summary>
         /// Determina si el objeto especificado es igual al objeto actual.
