@@ -5,3 +5,9 @@ dotnet_diagnostic.SA1601.severity = error
 
 # Default severity for analyzer diagnostics with category 'StyleCop.CSharp.OrderingRules'
 dotnet_analyzer_diagnostic.category-StyleCop.CSharp.OrderingRules.severity = silent
+
+# Default severity for analyzer diagnostics with category 'StyleCop.CSharp.LayoutRules'
+dotnet_analyzer_diagnostic.category-StyleCop.CSharp.LayoutRules.severity = none
+
+# IDE0046: Convertir a expresión condicional
+dotnet_diagnostic.IDE0046.severity = none
